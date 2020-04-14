@@ -18,7 +18,7 @@ NAME := k8s-custom-iptables
 SRCS := run.sh
 
 TAG ?= 1.0
-REGISTRY=gcr.io/google_containers
+REGISTRY ?= gcr.io/google_containers
 IMAGE := $(REGISTRY)/$(NAME):$(TAG)
 
 ifeq ($(REGISTRY),)
@@ -28,7 +28,7 @@ endif
 all: push
 
 push: image
-	gcloud docker -- push $(IMAGE)
+	docker push $(IMAGE)
 
 image: Dockerfile $(SRCS)
 	docker build -f Dockerfile -t $(IMAGE) .

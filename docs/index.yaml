@@ -1,15 +1,15 @@
 apiVersion: v1
 entries:
   k8s-custom-iptables:
-  - created: "2020-08-28T14:33:41.128977+01:00"
+  - created: "2020-08-28T14:39:56.596576+01:00"
     description: A Helm chart to help with adding custom IP tables rules to nodes
       in a Kubernetes cluster.
-    digest: 499f01be07b3672995ae68fd160568967d4fb0b5d0bcf4bff03d05b493179759
-    home: https://github.com/team-blaze/helm-k8s-custom-iptables
+    digest: bbeb86ed0929a9dba73c503ba1dc3d0173776450dd537090c3cf692d29234731
+    home: https://team-blaze.github.io/helm-k8s-custom-iptables
     name: k8s-custom-iptables
     sources:
     - https://github.com/team-blaze/helm-k8s-custom-iptables
     urls:
-    - https://team-blaze.github.com/helm-k8s-custom-iptables/k8s-custom-iptables-0.1.0.tgz
+    - https://team-blaze.github.io/helm-k8s-custom-iptables/k8s-custom-iptables-0.1.0.tgz
     version: 0.1.0
-generated: "2020-08-28T14:33:41.125052+01:00"
+generated: "2020-08-28T14:39:56.59488+01:00"

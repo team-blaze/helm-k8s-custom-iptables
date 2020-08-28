@@ -36,6 +36,6 @@ image: Dockerfile $(SRCS)
 package:
 	helm package ./$(NAME)
 	mv $(NAME)*.tgz docs
-	helm repo index docs --url https://team-blaze.github.com/helm-k8s-custom-iptables
+	helm repo index docs --url https://team-blaze.github.io/helm-k8s-custom-iptables
 
 .PHONY: image push package

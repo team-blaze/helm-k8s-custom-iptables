@@ -12,6 +12,10 @@ and https://github.com/technosophos/tscharts.
 
 Kubernetes templates and scripts based on https://github.com/bowei/k8s-custom-iptables
 
+## Repo URL
+
+https://team-blaze.github.io/helm-k8s-custom-iptables
+
 ## Configuration
 
 The following table lists the configurable parameters of the `k8s-custom-iptables` chart and their

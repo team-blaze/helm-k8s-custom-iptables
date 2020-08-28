@@ -1,0 +1,6 @@
+name: k8s-custom-iptables
+description: A Helm chart to help with adding custom IP tables rules to nodes in a Kubernetes cluster.
+version: 0.1.0
+home: https://github.com/team-blaze/helm-k8s-custom-iptables
+sources:
+  - https://github.com/team-blaze/helm-k8s-custom-iptables

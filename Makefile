@@ -14,11 +14,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-NAME := k8s-custom-iptables
 SRCS := run.sh
 
+REGISTRY ?= daaain
+NAME := k8s-custom-iptables
 TAG ?= 1.0
-REGISTRY ?= gcr.io/google_containers
 IMAGE := $(REGISTRY)/$(NAME):$(TAG)
 
 ifeq ($(REGISTRY),)

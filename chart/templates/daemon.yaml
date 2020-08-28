@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: {{.Values.Name}}
+  labels:
+    app: {{.Values.Name}}
+    version: v1
+spec:
+  selector:
+    matchLabels:
+      app: {{.Values.Name}}
+  template:
+    metadata:
+      labels:
+        name: {{.Values.Name}}
+        app: {{.Values.Name}}
+    spec:
+      hostNetwork: true
+      containers:
+        - name: {{.Values.Name}}
+          securityContext:
+            privileged: true
+          image: {{.Values.image}}
+          imagePullPolicy: Always
+          command: ["sh", "-c", "/run.sh"]
+          env:
+            - name: SLEEP_INTERVAL
+              value: "30"
+          resources:
+            requests:
+              cpu: 5m
+              memory: 10Mi
+          volumeMounts:
+            - mountPath: /cfg
+              name: cfg
+{{- if .Values.imagePullSecrets }}
+      imagePullSecrets:
+        - name: "{{.Values.imagePullSecrets}}"
+{{- end }}
+      volumes:
+        - name: cfg
+          configMap:
+            name: {{.Values.Name}}

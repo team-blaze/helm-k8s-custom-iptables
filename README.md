@@ -1,49 +1,37 @@
-# k8s-custom-iptables
+# k8s-custom-iptables Helm chart
 
-An example of how to add custom IP tables rules to a Kubernetes cluster.
-This collection of scripts creates a NAT (MASQ) rule for outbound traffic
-to a TARGETS CIDR range(s) given to the script.
+A Helm chart to help with adding custom IP tables rules to nodes in a Kubernetes cluster.
+This collection of scripts and templates create a NAT (MASQ) rule for outbound traffic to a TARGETS
+CIDR range(s) given to the script.
 
-## Installing rules into the cluster
+This is only necessary on Google Container Engine (GKE) if your cluster isn't a VPC-native cluster
+using alias IP address ranges. For more information see: https://cloud.google.com/kubernetes-engine/docs/how-to/alias-ips
 
-Install the daemonset that configures the cluster to NAT an IP range.
+Helm chart based on https://v3.helm.sh/docs/topics/chart_repository/#github-pages-example
+and https://github.com/technosophos/tscharts.
 
-```sh
-TARGETS="1.2.3.4/24,4.5.6.7/16" ./install.sh
-```
+Kubernetes templates and scripts based on https://github.com/bowei/k8s-custom-iptables
 
-## Uninstall rules from the cluster
+## Configuration
 
-Uninstall the IP tables rules from the cluster.
+The following table lists the configurable parameters of the `k8s-custom-iptables` chart and their
+default values, and can be overwritten via the helm `--set` flag.
 
-```sh
-./uninstall.sh
-```
+| Parameter          | Description                     | Default                          |
+| ------------------ | ------------------------------- | -------------------------------- |
+| `nat_ip_ranges`    | CIDR IP ranges, space separated | `10.0.0.0/24 192.168.0.0/16`     |
+| `image`            | Docker image and tag to use     | `daaain/k8s-custom-iptables:1.0` |
+| `imagePullSecrets` | Docker registry secret          | unset                            |
 
-## Configuring
+You'll definitely need to update the `nat_ip_ranges` to match the ones in your cloud VPC. In my case
+that was finding out the IP of the database – say `10.146.11.3` – and then defining a reasonable
+CIDR range which would include it – say `10.146.11.0/24`.
 
-The configuration for which ranges are NAT'd are in the `k8s-custom-iptables` ConfigMap.
-Values can be changed via `kubectl edit cm/k8s-custom-iptables`:
+I've pushed the image built off the `Dockerfile` in this repo into a public repo under my personal
+Docker Hub account which will work, but you should push into and use your private cloud registry. If
+you do so, you'll need to set `imagePullSecrets` for Kubernetes to be authenticated to pull the
+image when deploying, see: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
 
-```yaml
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: k8s-custom-iptables
-data:
-  nat.rules: "10.0.0.0/24 192.168.0.0/16"
-```
+## TODO
 
-## Creating and pushing the image
-
-First you need to authenticate Docker with your image registry.
-
-For example with Google Container Registry you could do `gcloud auth configure-docker`.
-
-For more info see: https://cloud.google.com/container-registry/docs/advanced-authentication
-
-Then you can use the Make scripts:
-
-```sh
-REGISTRY=gcr.io/my-registry make
-```
+- [ ] Add a way to clear IP tables when removing chart based on https://github.com/bowei/k8s-custom-iptables/blob/master/uninstall.sh

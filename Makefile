@@ -33,4 +33,9 @@ push: image
 image: Dockerfile $(SRCS)
 	docker build -f Dockerfile -t $(IMAGE) .
 
-.PHONY: image push
+package:
+	helm package ./$(NAME)
+	mv $(NAME)*.tgz docs
+	helm repo index docs --url https://team-blaze.github.com/helm-k8s-custom-iptables
+
+.PHONY: image push package

@@ -21,20 +21,20 @@ https://team-blaze.github.io/helm-k8s-custom-iptables
 The following table lists the configurable parameters of the `k8s-custom-iptables` chart and their
 default values, and can be overwritten via the helm `--set` flag.
 
-| Parameter          | Description                     | Default                          |
-| ------------------ | ------------------------------- | -------------------------------- |
-| `nat_ip_ranges`    | CIDR IP ranges, space separated | `10.0.0.0/24 192.168.0.0/16`     |
-| `image`            | Docker image and tag to use     | `daaain/k8s-custom-iptables:1.0` |
-| `imagePullSecrets` | Docker registry secret          | unset                            |
+| Parameter          | Description                     | Default                           |
+| ------------------ | ------------------------------- | --------------------------------- |
+| `nat_ip_ranges`    | CIDR IP ranges, space separated | `10.0.0.0/24 192.168.0.0/16`      |
+| `image`            | Docker image and tag to use     | `berylcc/k8s-custom-iptables:1.0` |
+| `imagePullSecrets` | Docker registry secret          | unset                             |
 
 You'll definitely need to update the `nat_ip_ranges` to match the ones in your cloud VPC. In my case
 that was finding out the IP of the database – say `10.146.11.3` – and then defining a reasonable
 CIDR range which would include it – say `10.146.11.0/24`.
 
-I've pushed the image built off the `Dockerfile` in this repo into a public repo under my personal
-Docker Hub account which will work, but you should push into and use your private cloud registry. If
-you do so, you'll need to set `imagePullSecrets` for Kubernetes to be authenticated to pull the
-image when deploying, see: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
+There's an image hosted in Docker Hub built from the `Dockerfile` in this repo which will work, but
+you might want to build and push into your private cloud registry. If you do so, you'll need to set
+`imagePullSecrets` for Kubernetes to be authenticated to pull the image when deploying, see:
+https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
 
 ## TODO
 

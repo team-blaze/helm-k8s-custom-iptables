@@ -28,8 +28,8 @@ spec:
               value: "30"
           resources:
             requests:
-              cpu: 5m
-              memory: 10Mi
+              cpu: 1m
+              memory: 2Mi
           volumeMounts:
             - mountPath: /cfg
               name: cfg
